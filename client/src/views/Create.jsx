@@ -5,25 +5,24 @@ import { useHistory } from 'react-router-dom'
 
 const Create = () => {
 
+        // ************ VARIABLES ************
     const [title, setTitle] = useState("") 
     const [price, setPrice] = useState(0) 
     const [description, setDescription] = useState("") 
     const history = useHistory() 
 
+    // ************ METHOD ************
     const handleSubmit =(e) => {
         e.preventDefault() 
-        axios.post(`http://localhost:8000/product/createOne`)
-            .then(res => {
-
-            }) 
+        axios.post(`http://localhost:8000/product/createOne`, {title, price, description})
+            .then(res => {history.push("/dashboard")}) 
             .catch(err => console.log(err)) 
     }
 
-
-
+    // ************ RETURN ************
     return (
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <label>Title</label>
                     <input type="text" name="title" value={title} onChange={e => setTitle(e.target.value)}/>

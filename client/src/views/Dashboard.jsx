@@ -3,8 +3,10 @@ import axios from 'axios'
 
 const Dashboard = () => {
 
+    // ************ VARIABLES ************
     const [products, setProducts] = useState() 
 
+    // ************ METHOD ************
     useEffect(() => {
         axios.get(`http://localhost:8000/product/readAll`)
             .then(res => setProducts(res.data))
@@ -12,6 +14,7 @@ const Dashboard = () => {
     }, [])
 
 
+    // ************ RETURN ************
     return (
         <div>
             <h1>Dashboard</h1>
