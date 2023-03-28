@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 
 
 const Create = () => {
@@ -37,6 +37,7 @@ const Create = () => {
                 </div>
                 <button>Submit</button>
             </form>
+            <p><Link to={`/dashboard`}>Dashboard</Link></p>
         </div>
     )
 }

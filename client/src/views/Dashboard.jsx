@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom' 
 import axios from 'axios'
 
 const Dashboard = () => {
@@ -39,6 +40,7 @@ const Dashboard = () => {
                     }
                 </tbody>
             </table>
+            <p><Link to={`/create`}>Create</Link></p>
         </div>
     )
 }
