@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useHistory, Link } from 'react-router-dom' 
+import { Link } from 'react-router-dom' 
 import axios from 'axios'
 
 const Dashboard = () => {
@@ -9,19 +9,19 @@ const Dashboard = () => {
     const [title, setTitle] = useState("") 
     const [price, setPrice] = useState(0) 
     const [description, setDescription] = useState("") 
-    const history = useHistory() 
+    const [refresh, setRefresh] = useState(true) 
 
     // ************ METHOD ************
     useEffect(() => {
         axios.get(`http://localhost:8000/product/readAll`)
             .then(res => setProducts(res.data))
             .catch(err => console.log(err)) 
-    }, [])
+    }, [refresh])
 
     const handleSubmit =(e) => {
         e.preventDefault() 
         axios.post(`http://localhost:8000/product/createOne`, {title, price, description})
-            .then(res => {history.push("/dashboard")}) 
+            .then(res => {setRefresh(!refresh)}) 
             .catch(err => console.log(err)) 
     }
 
