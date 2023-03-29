@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react' 
-import { useHistory, useParams } from 'react-router-dom'
-import axios from 'axios' 
+import { useHistory, useParams, Link } from 'react-router-dom'
+import axios from 'axios'
 
 const Edit = () => {
 
@@ -29,7 +29,14 @@ const Edit = () => {
         e.preventDefault() 
         axios.put(`http://localhost:8000/product/updateOne/${id}`, {title, price, description})
             .then(res => {history.push("/dashboard")})
-            .catch(err => console.log(err)) 
+            .catch(err => {
+                const errRes = err.response.data.errors // grabs all the error keys 
+                const errArr = [] // empty array to store the errors 
+                for(const key of Object.keys(errRes)) {
+                    errArr.push(errRes[key]["message"])
+                }
+                setErrors(errArr) 
+            }) 
     }
 
 
@@ -53,6 +60,15 @@ const Edit = () => {
                 </div>
                 <button>Edit</button>
             </form>
+            <Link to={`/dashboard`}>Back to Dashboard</Link>
+            {
+                errors && 
+                errors.map((err, i) => {
+                    return (
+                        <p key={i} style={{color:"red"}}>{err}</p>
+                    )
+                })
+            }
         </div>
     )
 }

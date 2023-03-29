@@ -10,6 +10,7 @@ const Dashboard = () => {
     const [price, setPrice] = useState(0) 
     const [description, setDescription] = useState("") 
     const [refresh, setRefresh] = useState(true) 
+    const [errors, setErrors] = useState() 
 
     // ************ METHOD ************
     useEffect(() => {
@@ -22,6 +23,19 @@ const Dashboard = () => {
         e.preventDefault() 
         axios.post(`http://localhost:8000/product/createOne`, {title, price, description})
             .then(res => {setRefresh(!refresh)}) 
+            .catch(err => {
+                const errorResponse = err.response.data.errors // grabs all the error keys
+                const errorArr = [] // empty array to store errors 
+                for(const key of Object.keys(errorResponse)) { // grab the error message using the keys
+                    errorArr.push(errorResponse[key]["message"]) // adds the errors to the empty array 
+                }
+                setErrors(errorArr) 
+            }) 
+    }
+
+    const handleDelete = (id) => {
+        axios.delete(`http://localhost:8000/product/deleteOne/${id}`)
+            .then(res => {setRefresh(!refresh)})
             .catch(err => console.log(err)) 
     }
 
@@ -45,6 +59,14 @@ const Dashboard = () => {
                     </div>
                     <button>Submit</button>
                 </form>
+                {
+                    errors && 
+                    errors.map((err, i) => {
+                        return (
+                            <p key={i} style={{color:"red"}}>{err}</p>
+                        )
+                })
+            }
             </div>
 
             <h1>All Products</h1>
@@ -63,7 +85,7 @@ const Dashboard = () => {
                                 <tr key={i}>
                                     <td><Link to={`/view/${product._id}`}>{product.title}</Link></td>
                                     <td><Link to={`/edit/${product._id}`}>Edit</Link></td>
-                                    <td><Link to={`/view/${product._id}`}>Delete</Link></td>
+                                    <td><button onClick={() => handleDelete(product._id)}>Delete</button></td>
                                 </tr>
                             ))
                     }
