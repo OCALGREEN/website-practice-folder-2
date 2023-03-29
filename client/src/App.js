@@ -2,6 +2,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Create from './views/Create';
 import Dashboard from './views/Dashboard';
 import View from './views/View'
+import Edit from './views/Edit'
 
 function App() {
   return (
@@ -18,6 +19,10 @@ function App() {
 
         <Route exact path="/view/:id">
           <View/>
+        </Route>
+
+        <Route exact path="/edit/:id">
+          <Edit/>
         </Route>
 
       </Switch>

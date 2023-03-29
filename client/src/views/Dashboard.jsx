@@ -52,6 +52,8 @@ const Dashboard = () => {
                 <thead>
                     <tr>
                         <th>Title</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +62,8 @@ const Dashboard = () => {
                             products.map((product, i) => (
                                 <tr key={i}>
                                     <td><Link to={`/view/${product._id}`}>{product.title}</Link></td>
+                                    <td><Link to={`/edit/${product._id}`}>Edit</Link></td>
+                                    <td><Link to={`/view/${product._id}`}>Delete</Link></td>
                                 </tr>
                             ))
                     }
